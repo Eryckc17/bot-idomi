@@ -6,21 +6,21 @@ from threading import Thread
 from flask import Flask
 import os
 
-# 1. Configuración de Flask para Render
+# 1. Configuración de Flask para engañar a Render
 app = Flask(__name__)
 
 @app.route('/')
 def health_check():
     return "IDOMI-BOT VIGILANTE ACTIVO", 200
 
-# 2. Tu configuración de Telegram
+# 2. Tu configuración de Telegram (Verificada)
 TOKEN = '8627174315:AAGKTN6-WLuBqyFPZxoVatP_L7rrRq14iJA'
 CHAT_ID = '644581238'
 URL_PORTAL = 'https://www.dgcp.gob.do/visualizar-procesos/'
 
 bot = telebot.TeleBot(TOKEN)
 
-# 3. Función de búsqueda (Vigilancia)
+# 3. Función de búsqueda (Vigilancia de IDOMI)
 def buscar_bucle():
     while True:
         try:
@@ -41,7 +41,11 @@ if __name__ == "__main__":
     t.daemon = True
     t.start()
     
-    bot.send_message(CHAT_ID, "🚀 IDOMI-BOT EN LÍNEA (MODO NUBE). Vigilando portal cada 30 min.")
+    # Mensaje inicial de éxito
+    try:
+        bot.send_message(CHAT_ID, "🚀 IDOMI-BOT EN LÍNEA (MODO NUBE). Vigilando portal cada 30 min.")
+    except:
+        pass
     
     # Iniciamos el servidor web en el puerto que pide Render
     port = int(os.environ.get("PORT", 8080))
